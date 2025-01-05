@@ -4,6 +4,7 @@ from pyrogram import filters
 from pyrogram.enums import ChatType
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from youtubesearchpython.__future__ import VideosSearch
+import asyncio
 
 import config
 from AviaxMusic import app
@@ -87,12 +88,56 @@ async def start_pm(client, message: Message, _):
     else:
         out = private_panel(_)
         UP, CPU, RAM, DISK = await bot_sys_stats()
-        await message.reply_photo(
+        lol = await message.reply_text(
+            f"**ʜᴇʏ ʙᴀʙʏ  {message.from_user.mention}**"
+        )
+
+    await asyncio.sleep(0.1)
+    await lol.edit_text("🌸")
+    await asyncio.sleep(0.5)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ.")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ..")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ...")
+    await asyncio.sleep(0.2)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ.")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ..")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ...")
+    await asyncio.sleep(0.2)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ.")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ..")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ...")
+    await asyncio.sleep(0.2)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ.")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ..")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ...")
+    await asyncio.sleep(0.2)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ.")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ..")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ...")
+    await asyncio.sleep(0.2)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ.")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ..")
+    await asyncio.sleep(0.1)
+    await lol.edit_text("ꜱᴛᴀʀᴛɪɴɢ...")
+    await lol.delete()      
+      
+    await message.reply_photo(
             photo=config.START_IMG_URL,
             caption=_["start_2"].format(message.from_user.mention, app.mention, UP, DISK, CPU, RAM),
             reply_markup=InlineKeyboardMarkup(out),
         )
-        if await is_on_off(2):
+    if await is_on_off(2):
             return await app.send_message(
                 chat_id=config.LOG_GROUP_ID,
                 text=f"{message.from_user.mention} ᴊᴜsᴛ sᴛᴀʀᴛᴇᴅ ᴛʜᴇ ʙᴏᴛ.\n\n<b>ᴜsᴇʀ ɪᴅ :</b> <code>{message.from_user.id}</code>\n<b>ᴜsᴇʀɴᴀᴍᴇ :</b> @{message.from_user.username}",
