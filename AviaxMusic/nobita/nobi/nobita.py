@@ -89,7 +89,7 @@ async def reply_text(client, message):
             similar_text_list.append(doc)
         for text in similar_text_list:
             similarity = SequenceMatcher(None, message.text.lower(), text["usertext"].lower()).ratio()
-            if similarity > 0.3:
+            if similarity > 0.8:
                 bottexts = text["bottexts"]
                 await message.reply_chat_action(ChatAction.TYPING)
                 await asyncio.sleep(1)  # 3 second ka delay
