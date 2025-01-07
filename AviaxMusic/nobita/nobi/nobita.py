@@ -67,25 +67,10 @@ async def del_text(client, message):
 
 
 
-def sequence_similarity(s1, s2):
-    similarity = SequenceMatcher(None, s1, s2).ratio()
-    return similarity
-
-def levenshtein_similarity(s1, s2):
-    distance = Levenshtein.distance(s1, s2)
-    max_len = max(len(s1), len(s2))
-    similarity = 1 - (distance / max_len)
-    return similarity
-
-# ...
-
-
 @app.on_message(filters.text & (filters.group | filters.private))
 async def reply_text(client, message):
     chat_id = message.chat.id
-    usertext = message.text.lower()
-    words = usertext.split()
-    data = await nobita.find_one({"usertext": {"$regex": re.escape(usertext), "$options": "i"}})
+    data = await nobita.find_one({"usertext": message.text})
     if data:
         bottexts = data["bottexts"]
         await message.reply_chat_action(ChatAction.TYPING)
@@ -95,8 +80,9 @@ async def reply_text(client, message):
         else:
             await message.reply(bottexts)
     else:
+        # Check for similar text
         pipeline = [
-            {"$match": {"usertext": {"$regex": re.escape(usertext), "$options": "i"}}},
+            {"$match": {"usertext": {"$regex": message.text.lower(), "$options": "i"}}},
             {"$sort": {"usertext": 1}}
         ]
         similar_text = nobita.aggregate(pipeline)
@@ -104,9 +90,8 @@ async def reply_text(client, message):
         async for doc in similar_text:
             similar_text_list.append(doc)
         for text in similar_text_list:
-            sequence_sim = sequence_similarity(usertext, text["usertext"].lower())
-            levenshtein_sim = levenshtein_similarity(usertext, text["usertext"].lower())
-            if sequence_sim > 0.3 or levenshtein_sim > 0.3:
+            similarity = SequenceMatcher(None, message.text.lower(), text["usertext"].lower()).ratio()
+            if similarity > 0.1:
                 bottexts = text["bottexts"]
                 await message.reply_chat_action(ChatAction.TYPING)
                 await asyncio.sleep(1)  # 3 second ka delay
@@ -114,14 +99,21 @@ async def reply_text(client, message):
                     await message.reply(random.choice(bottexts))
                 else:
                     await message.reply(bottexts)
-            else:
-                for word in words:
-                    if word in text["usertext"].lower():
-                        bottexts = text["bottexts"]
-                        await message.reply_chat_action(ChatAction.TYPING)
-                        await asyncio.sleep(1)  # 3 second ka delay
-                        if isinstance(bottexts, list):
-                            await message.reply(random.choice(bottexts))
-                        else:
-                            await message.reply(bottexts)
-                        break
+        # Check for tagged reply
+        pipeline = [
+            {"$match": {"usertext": {"$regex": message.text.lower(), "$options": "i"}}},
+            {"$sort": {"usertext": 1}}
+        ]
+        tagged_text = nobita.aggregate(pipeline)
+        tagged_text_list = []
+        async for doc in tagged_text:
+            tagged_text_list.append(doc)
+        for text in tagged_text_list:
+            if text["usertext"].lower() in message.text.lower():
+                bottexts = text["bottexts"]
+                await message.reply_chat_action(ChatAction.TYPING)
+                await asyncio.sleep(1)  # 3 second ka delay
+                if isinstance(bottexts, list):
+                    await message.reply(random.choice(bottexts))
+                else:
+                    await message.reply(bottexts)
