@@ -4,9 +4,9 @@ from difflib import SequenceMatcher
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from config import OWNER_ID
-from DAXXMUSIC import app
-from DAXXMUSIC.core.mongo import mongodb
-from DAXXMUSIC.utils.decorators import AdminRightsCheck
+from AviaxMusic import app
+from AviaxMusic.core.mongo import mongodb
+from AviaxMusic.utils.decorators import AdminRightsCheck
 import asyncio
 
 from pyrogram.enums import ChatAction
