@@ -20,7 +20,7 @@ async def tsave(client, message):
     usertext, bottexts = text.split(" - ")
     bottexts = bottexts.split(", ")
     nobita.insert_one({"usertext": usertext, "bottexts": bottexts})
-    await message.reply("Data saved!")
+    await message.reply(f"Data saved!{usertext} - {bottexts}")
     
     
     
@@ -28,14 +28,14 @@ async def tsave(client, message):
 async def del_text(client, message):
     # Delete text from MongoDB
     text = message.text.split(" ", 1)[1]
-    data = await nobita.find_one({"usertext": text})
+    data = await nobita.find_one({"usertext": usertext})
     if data:
         reply_text = ", ".join(data['bottexts'])
-        await message.reply(f"Delete text: '{text}' and reply: '{reply_text}'")
-        await nobita.delete_one({"usertext": text})
+        await message.reply(f"Delete text: '{usertext}' and reply: '{bottexts}'")
+        await nobita.delete_one({"usertext": usertext})
         # Delete bot text from MongoDB
-        for bot_text in data['bottexts']:
-            await Nobita.delete_one({"bottext": bot_text})
-        await message.reply(f"Save text '{text}' and reply '{reply_text}' reply text deleted!")
+        for bottexts in data['bottexts']:
+            await Nobita.delete_one({"bottexts": bottexts})
+        await message.reply(f"Save text '{usertext}' and reply '{bottexts}' reply text deleted!")
     else:
         await message.reply("Data not found!")
