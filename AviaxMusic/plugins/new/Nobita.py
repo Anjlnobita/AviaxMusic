@@ -30,7 +30,7 @@ async def del_text(client, message):
     text = message.text.split(" ", 1)[1]
     data = await nobita.find_one({"usertext": usertext})
     if data:
-        reply_text = ", ".join(data['bottexts'])
+        bottexts = ", ".join(data['bottexts'])
         await message.reply(f"Delete text: '{usertext}' and reply: '{bottexts}'")
         await nobita.delete_one({"usertext": usertext})
         # Delete bot text from MongoDB
