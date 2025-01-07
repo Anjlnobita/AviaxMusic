@@ -9,6 +9,8 @@ from AviaxMusic.core.mongo import mongodb
 from AviaxMusic.utils.decorators import AdminRightsCheck
 import asyncio
 
+import Levenshtein
+
 from pyrogram.enums import ChatAction
 
 
@@ -63,9 +65,20 @@ async def del_text(client, message):
 
 
 
+# ...
 
+def levenshtein_similarity(s1, s2):
+    distance = Levenshtein.distance(s1, s2)
+    max_len = max(len(s1), len(s2))
+    similarity = 1 - (distance / max_len)
+    return similarity
 
-# Chatbot Module
+def sequence_similarity(s1, s2):
+    similarity = SequenceMatcher(None, s1, s2).ratio()
+    return similarity
+
+# ...
+
 @app.on_message(filters.text & (filters.group | filters.private))
 async def reply_text(client, message):
     chat_id = message.chat.id
@@ -89,8 +102,9 @@ async def reply_text(client, message):
         async for doc in similar_text:
             similar_text_list.append(doc)
         for text in similar_text_list:
-            similarity = SequenceMatcher(None, message.text.lower(), text["usertext"].lower()).ratio()
-            if similarity > 0.1:
+            levenshtein_sim = levenshtein_similarity(message.text.lower(), text["usertext"].lower())
+            sequence_sim = sequence_similarity(message.text.lower(), text["usertext"].lower())
+            if levenshtein_sim > 0.5 or sequence_sim > 0.5:
                 bottexts = text["bottexts"]
                 await message.reply_chat_action(ChatAction.TYPING)
                 await asyncio.sleep(1)  # 3 second ka delay
