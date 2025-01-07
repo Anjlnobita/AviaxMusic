@@ -64,6 +64,7 @@ async def del_text(client, message):
 
 
 
+
 # Chatbot Module
 @app.on_message(filters.text & (filters.group | filters.private))
 async def reply_text(client, message):
@@ -89,7 +90,7 @@ async def reply_text(client, message):
             similar_text_list.append(doc)
         for text in similar_text_list:
             similarity = SequenceMatcher(None, message.text.lower(), text["usertext"].lower()).ratio()
-            if similarity > 0.8:
+            if similarity > 0.6:
                 bottexts = text["bottexts"]
                 await message.reply_chat_action(ChatAction.TYPING)
                 await asyncio.sleep(1)  # 3 second ka delay
@@ -97,7 +98,6 @@ async def reply_text(client, message):
                     await message.reply(random.choice(bottexts))
                 else:
                     await message.reply(bottexts)
-                break
         else:
             # Check for tagged reply
             pipeline = [
@@ -117,4 +117,3 @@ async def reply_text(client, message):
                         await message.reply(random.choice(bottexts))
                     else:
                         await message.reply(bottexts)
-                    break
