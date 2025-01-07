@@ -82,7 +82,7 @@ def levenshtein_similarity(s1, s2):
 @app.on_message(filters.text & (filters.group | filters.private))
 async def reply_text(client, message):
     chat_id = message.chat.id
-    data = await nobita.find_one({"usertext": message.text})
+    data = await nobita.find_one({"usertext": {"$regex": re.escape(message.text.lower()), "$options": "i"}})
     if data:
         bottexts = data["bottexts"]
         await message.reply_chat_action(ChatAction.TYPING)
@@ -104,8 +104,7 @@ async def reply_text(client, message):
         for text in similar_text_list:
             sequence_sim = sequence_similarity(message.text.lower(), text["usertext"].lower())
             levenshtein_sim = levenshtein_similarity(message.text.lower(), text["usertext"].lower())
-            if sequence_sim > 0.3
-3 or levenshtein_sim > 0.7:
+            if sequence_sim > 0.7 or levenshtein_sim > 0.7:
                 bottexts = text["bottexts"]
                 await message.reply_chat_action(ChatAction.TYPING)
                 await asyncio.sleep(1)  # 3 second ka delay
