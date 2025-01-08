@@ -36,7 +36,6 @@ async def init():
     await app.start()
     for all_module in ALL_MODULES:
         importlib.import_module("AviaxMusic.plugins" + all_module)
-        importlib.import_module("AviaxMusic.nobita")
     LOGGER("AviaxMusic.plugins").info("Successfully Imported Modules...")
     await userbot.start()
     await Aviax.start()
