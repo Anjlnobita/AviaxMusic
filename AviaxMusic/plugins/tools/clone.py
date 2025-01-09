@@ -15,7 +15,7 @@ from config import API_ID, API_HASH
 from AviaxMusic import app
 from AviaxMusic.misc import SUDOERS
 from AviaxMusic.utils import get_assistant, clonebotdb
-from config import LOGGER_ID
+from config import LOG_GROUP_ID
 
 CLONES = set()
 
@@ -55,7 +55,7 @@ async def clone_txt(client, message):
         try:
 
             await app.send_message(
-                LOGGER_ID, f"**#New_Clones**\n\n**Bot:- @{bot.username}**"
+                LOG_GROUP_ID, f"**#New_Clones**\n\n**Bot:- @{bot.username}**"
             )
             await userbot.send_message(bot.username, "/start")
 
