@@ -1,7 +1,7 @@
 import random
 import string
 
-from pyrogram import filters
+from pyrogram import Client, filters
 from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
 from pytgcalls.exceptions import NoActiveGroupCall
 
@@ -25,7 +25,7 @@ from AviaxMusic.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
 
 
-@app.on_message(
+@client.on_message(
     filters.command(
         [
             "play",
@@ -438,7 +438,7 @@ async def play_commnd(
                 return await play_logs(message, streamtype=f"URL Searched Inline")
 
 
-@app.on_callback_query(filters.regex("MusicStream") & ~BANNED_USERS)
+@client.on_callback_query(filters.regex("MusicStream") & ~BANNED_USERS)
 @languageCB
 async def play_music(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
@@ -508,7 +508,7 @@ async def play_music(client, CallbackQuery, _):
     return await mystic.delete()
 
 
-@app.on_callback_query(filters.regex("AnonymousAdmin") & ~BANNED_USERS)
+@client.on_callback_query(filters.regex("AnonymousAdmin") & ~BANNED_USERS)
 async def anonymous_check(client, CallbackQuery):
     try:
         await CallbackQuery.answer(
@@ -519,7 +519,7 @@ async def anonymous_check(client, CallbackQuery):
         pass
 
 
-@app.on_callback_query(filters.regex("AviaxPlaylists") & ~BANNED_USERS)
+@client.on_callback_query(filters.regex("AviaxPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
@@ -607,7 +607,7 @@ async def play_playlists_command(client, CallbackQuery, _):
     return await mystic.delete()
 
 
-@app.on_callback_query(filters.regex("slider") & ~BANNED_USERS)
+@client.on_callback_query(filters.regex("slider") & ~BANNED_USERS)
 @languageCB
 async def slider_queries(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
