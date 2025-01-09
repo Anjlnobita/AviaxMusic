@@ -10,11 +10,11 @@ from pyrogram.errors.exceptions.bad_request_400 import (
     AccessTokenExpired,
     AccessTokenInvalid,
 )
-from RISHUMUSIC.utils.database import get_assistant
+from AviaxMusic.utils.database import get_assistant
 from config import API_ID, API_HASH
-from RISHUMUSIC import app
-from RISHUMUSIC.misc import SUDOERS
-from RISHUMUSIC.utils.database import get_assistant, clonebotdb
+from AviaxMusic import app
+from AviaxMusic.misc import SUDOERS
+from AviaxMusic.utils import get_assistant, clonebotdb
 from config import LOGGER_GROUP_ID as LOGGER_ID
 
 CLONES = set()
