@@ -15,7 +15,7 @@ from config import API_ID, API_HASH
 from RISHUMUSIC import app
 from RISHUMUSIC.misc import SUDOERS
 from RISHUMUSIC.utils.database import get_assistant, clonebotdb
-from config import LOGGER_ID
+from config import LOGGER_GROUP_ID as LOGGER_ID
 
 CLONES = set()
 
