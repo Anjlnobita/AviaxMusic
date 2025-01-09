@@ -1,4 +1,4 @@
-from RISHUMUSIC.core.mongo import mongodb
+from AviaxMusic.core.mongo import mongodb
 from typing import Dict, List, Union
 
 cloneownerdb = mongodb.cloneownerdb
