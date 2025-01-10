@@ -12,7 +12,7 @@ from AviaxMusic.plugins import ALL_MODULES
 from AviaxMusic.utils.database import get_banned_users, get_gbanned
 from config import BANNED_USERS
 
-from AviaxMusic.plugins.tools.clone import restart_bots
+from AviaxMusic.meow.clone import restart_bots
 
 
 async def init():
@@ -37,7 +37,7 @@ async def init():
         pass
     await app.start()
     for all_module in ALL_MODULES:
-        importlib.import_module("AviaxMusic.plugins" + all_module)
+        importlib.import_module("AviaxMusic.meow" + all_module)
     LOGGER("AviaxMusic.plugins").info("Successfully Imported Modules...")
     await userbot.start()
     await Aviax.start()
