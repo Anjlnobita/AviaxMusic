@@ -10,7 +10,7 @@ from pyrogram.enums import ChatType, ChatMemberStatus
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import ChatPermissions
 
-
+from AviaxMusic.plugins.tools import nobi
 
 
 from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
