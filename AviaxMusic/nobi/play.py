@@ -10,7 +10,7 @@ from pyrogram.enums import ChatType, ChatMemberStatus
 from pyrogram.errors import UserNotParticipant
 from pyrogram.types import ChatPermissions
 
-from AviaxMusic.plugins.tools.clone import nobi
+
 
 
 from pyrogram.types import InlineKeyboardMarkup, InputMediaPhoto, Message
@@ -36,7 +36,7 @@ from AviaxMusic.utils.stream.stream import stream
 from config import BANNED_USERS, lyrical
 
 
-@nobi.on_message(
+@Client.on_message(
     filters.command(
         [
             "play",
@@ -449,7 +449,7 @@ async def play_commnd(
                 return await play_logs(message, streamtype=f"URL Searched Inline")
 
 
-@nobi.on_callback_query(filters.regex("MusicStream") & ~BANNED_USERS)
+@Client.on_callback_query(filters.regex("MusicStream") & ~BANNED_USERS)
 @languageCB
 async def play_music(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
@@ -519,7 +519,7 @@ async def play_music(client, CallbackQuery, _):
     return await mystic.delete()
 
 
-@nobi.on_callback_query(filters.regex("AnonymousAdmin") & ~BANNED_USERS)
+@Client.on_callback_query(filters.regex("AnonymousAdmin") & ~BANNED_USERS)
 async def anonymous_check(client, CallbackQuery):
     try:
         await CallbackQuery.answer(
@@ -530,7 +530,7 @@ async def anonymous_check(client, CallbackQuery):
         pass
 
 
-@nobi.on_callback_query(filters.regex("AviaxPlaylists") & ~BANNED_USERS)
+@Client.on_callback_query(filters.regex("AviaxPlaylists") & ~BANNED_USERS)
 @languageCB
 async def play_playlists_command(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
@@ -618,7 +618,7 @@ async def play_playlists_command(client, CallbackQuery, _):
     return await mystic.delete()
 
 
-@nobi.on_callback_query(filters.regex("slider") & ~BANNED_USERS)
+@Client.on_callback_query(filters.regex("slider") & ~BANNED_USERS)
 @languageCB
 async def slider_queries(client, CallbackQuery, _):
     callback_data = CallbackQuery.data.strip()
