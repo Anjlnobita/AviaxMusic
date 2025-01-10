@@ -14,7 +14,7 @@ from AviaxMusic.utils.database import get_assistant
 from config import API_ID, API_HASH
 from AviaxMusic import app
 from AviaxMusic.misc import SUDOERS
-from AviaxMusic.utils import get_assistant, clonebotdb
+from AviaxMusic.utils import get_assistant, clonedb
 from config import LOG_GROUP_ID
 
 CLONES = set()
