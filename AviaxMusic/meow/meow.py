@@ -27,7 +27,7 @@ async def clone_txt(client, message):
         bot_token = message.text.split("/clone", 1)[1].strip()
         mi = await message.reply_text("Please wait while I process the bot token.")
         try:
-            ai = nobi(
+            ai = Client(
                 bot_token,
                 API_ID,
                 API_HASH,
@@ -129,7 +129,7 @@ async def restart_bots():
         bots = clonebotdb.find()
         async for bot in bots:
             bot_token = bot["token"]
-            ai = nobi(
+            ai = Client(
                 f"{bot_token}",
                 API_ID,
                 API_HASH,
